@@ -1,1 +1,1 @@
-# Visual-Auditing-Security-with-Microsoft-Sentinel
+# Visual Auditing Security Workbook with Microsoft Sentinel
