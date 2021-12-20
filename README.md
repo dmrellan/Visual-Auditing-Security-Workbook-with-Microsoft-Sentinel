@@ -73,13 +73,70 @@ Enable Schannel events:
 
 ### 3 - Microsoft Sentinel: Configure AD integration and events collection
 #### Active Directory Integration
+1. Go to your Microsoft Sentinel > Settings > Workspace Settings > Computer Groups > Active Directory and check the Import active directory group memberships from computers.
+2. Click Apply.
+
 #### Events Collection
+1. Go to your Microsoft Sentinel > Settings > Workspace Settings > Agents configuration
+2. Click +Add windows event log and write System
+3. Click on Information box to collect only the Information Events from System log and the apply.
+
 #### Microsoft Defender for Cloud
+1. Enable all Microsoft Defender for Cloud plans in the Log Analytics with Microsoft Sentinel enabled
+2. Go to Microsoft Defender for Cloud
+3. Go to Environment Settings and expand your tenant and azure subscriptions until find your Log Analytics workpsace with Microsoft Sentinel enabled.
+4. Click on your Log Analytics with Microsoft Sentinel enabled.
+5. Go to Defender plans and click on "Enable all Microsoft Defender for Cloudo plans"
+6. Click on save.
+7. Go to Data collection.
+8. Cllick on All events and save.
 
 ### 4 - Connect your Domain Controllers to Microsoft Sentinel
+1. On your privided server, deploy the Log Analytics Gateway software and connect it to Microsoft Sentinel.
+ - Download the Log Analytics Gateway software from your workspace going to Microsoft Sentinel > Settings > Workspace Settings > Agents management > Log Analytics Gateway
+ - Install the Log Analytics Gateway.The log analytics gateway needs access to the 4 endpoints described here in Firewall requirements: https://docs.microsoft.com/en-us/azure/azure-monitor/platform/log-analytics-agent
+ - Install the Microsoft Monitoring Agent on Log Analytics Gateway and connect it to the Microsoft Sentinel with the Workspace Id and Primary key that you will find on Microsoft Sentinel > Settings > Workspace Settings > Agents management.
+2. Install the Microsoft Monitoring Agent in your Domain Controllers and connected them to your Microsoft Sentinel throught Log Analtyics Gateway with the Workspace Id and Primary key that you will find on Microsoft Sentinel > Settings > Workspace Settings > Agents management. You will need to configure the Log Analytics Gateway in the Proxy Setting tab of each Domain Controller.
+
 ### 5 - Setup the PowerShell script to populate Custom Logs
+1. Install the RSAT AD DS Powershell module in the provided server (Log Analytics Gateway).
+ - Open an elevated powershell console and run the command Install-windowsfeature RSAT-AD-PowerShell
+2. Use the ADObjectsToALA_v1.0.ps1 and domainlist.csv.
+3. Modify the paramters section of ADObjectsToALA_v1.0.ps1 and domainlist.csv to adapt them to your environment.
+ - Domainlist.csv needs to be manually created and should contain: Headers line (dc,isLAPSDeployed) and one Domain Controller name and isLAPSDeployed value (comma separated) per line from each domain in scope.
+4. Create a scheduled task to re-run the script daily.
+
 ### 6 - Create the Log Analytics Parser Funtions in your Microsoft Sentinel
+Create the following Log Analytics Functions in your Log Analytics with Microsoft Sentinel enabled based on the provieded kusto files in Log Analytics Parser functions folder:
+- VASWAdminAuditParser
+- VASWComputersParser
+- VASWGroupParser
+- VASWPawAuditParser
+- VASWUsersParser
+
 ### 7 - Import the Visual Auditing Security Workbook
+1. Go to Microsoft Sentinel > Workbooks
+2. Click on Add workbook
+3. Click on edit and go to Advanced Editor
+4. Remove the default workbook code and paste the code of Visual Auditing Security Workbook.workbook
+5. Click apply
+6. Configure the parameters:
+ - Log Analytics workspace.
+ - Time Range
+ - Ms-MCS-AdmPwd in LAPS audit tab. You can get your ms-mcs-admpwd by running the following code:
+    
+    <pre><code>$rootdse = Get-ADRootDSE
+    $GUIDs = Get-ADObject -SearchBase ($rootdse.SchemaNamingContext) -LDAPFilter "(schemaidguid=*)" -Properties lDAPDisplayName,schemaIDGUID
+    ForEach ($Guid in $Guids)
+    {
+		    If ($guid.lDAPDisplayName -Like "*ms-mcs-admpwd")
+      {
+		      $SGuid = ([System.GUID]$guid.SchemaIDGuid).Guid
+		      Write-host $guid.lDAPDisplayName, ([System.GUID]$guid.SchemaIDGuid)
+		    }
+    }
+    </code></pre>
+
 
 ## Author
 The Visual Auditing Security Workbook was developed by **Diego Martínez Rellán (dmrellan) - Microsoft**. It is inspired by the Visual Auditing Security Toolkit (VAST) service from Microsoft Support (currently retired) developed by Brian Delaney and Jon Shectman.
