@@ -5,6 +5,9 @@
 The _Visual Auditing Security Workbook_ project is a set of tabs in an Azure Workbook for Microsoft Sentinel that pulls information from the Security Events of your Active Directory (Domain Controllers) and a custom HTTP Data Collector API and enables security teams to quickly detect insights about their Active Directory configuration, operations, and risks.
 
 The current Visual Auditing Security Workbook includes 11 different tabs to discover information about different scenarios:
+
+![image](https://user-images.githubusercontent.com/35997289/146782431-46aba436-71bc-452f-89c8-d3380562e59d.png)
+
 - **Active Directory user hygiene**: This tab shows the overall state of the user population based on high-privilege users, users that have not logged in for an extended period, users that have not changed the password for an extended period, and users with Password Never Expired set.
 - **Active Directory computer hygiene**: This tab shows which computers within the domain are active with logins. It will present computers based on the Operating System version, with stale logins and passwords.
 - **LAPS deployment**: Local Administrative Password Solution (LAPS) tab shows how many computers have been configured by the LAPS solution. It will show which Operating Systems have LAPS deployed and the up-to-dateness vector on the LAPS Password.
