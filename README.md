@@ -13,7 +13,7 @@ The _Visual Auditing Security Workbook_ project is a set of scenarios in an Azur
 ![Scenario](https://user-images.githubusercontent.com/35997289/146847937-ff196df8-82f5-4953-87a5-783b7fd4fd58.jpg)
 
 This workbook visualizes information from two Data Sources:
-- **Security Events** from Domain Controllers (Microsoft Defender for Cloud plans) and common **Events**.
+- **Security Events** from Domain Controllers and common **Events**.
 - Data sent by a **Custom HTTP Data Collector API**. (Custom Logs format)
 
 
@@ -125,8 +125,14 @@ Once advanced audit policies and registry keys are configured, the next step is 
 ![image](https://user-images.githubusercontent.com/35997289/146852267-fea98016-cb7b-4866-a435-340114823254.png)
 
 
-#### Microsoft Defender for Cloud
-To collecte the Security Events it is needed to enable **all Microsoft Defender for Cloud plans** in the Microsoft Sentinel workspace.
+#### SecurityEvents collection
+To collect the SecurityEvents from Domain Controllers, there are two options when you use Microsoft Monitoring Agent and Sentinel:
+- Use the Sentinel Data Connector **Security Events via Legacy Agent**.
+- Enable Microsoft Defender for Cloud plans over Microsoft Sentinel workspace.
+The difference between them resides in a billing way. Practically speaking, we need to collect Security Events, so there is no difference in the method chosen for this solution. We recommend you evaluate both options and choose the most interesting for you.
+Below is the **Microsoft Defender for Cloud** method because it requires some additional (and simple) steps.
+
+To enable **all Microsoft Defender for Cloud plans** in the Microsoft Sentinel workspace you need to:
 1. Go to **Microsoft Defender for Cloud**.
 2. Go to Environment Settings and expand your Tenant and Azure Subscriptions until find your Log Analytics Microsoft Sentinel workspace.
 3. Click on your Microsoft Sentinel workspace.
