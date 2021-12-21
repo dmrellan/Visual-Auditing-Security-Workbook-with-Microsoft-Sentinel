@@ -143,8 +143,8 @@ To start sending events from Domain Controllers to Microsoft Sentinel, firstly i
 5. Click **apply**.
 6. Configure the parameters:
  - Log Analytics workspace.
- - Time Range
- - Ms-MCS-AdmPwd in LAPS audit tab. You can get your ms-mcs-admpwd by running the following code:
+ - Time Range (default 7 days).
+ - ms-mcs-AdmPwd in LAPS audit tab. You can get your GUID by running the following code:
     
     <pre><code>$rootdse = Get-ADRootDSE
     $GUIDs = Get-ADObject -SearchBase ($rootdse.SchemaNamingContext) -LDAPFilter "(schemaidguid=*)" -Properties lDAPDisplayName,schemaIDGUID
