@@ -1,0 +1,13 @@
+//VASWGroupParser
+VASW_groups_CL 
+| summarize arg_max(TimeGenerated,*) by SID_s
+| where TimeGenerated >= ago(24h)
+| project TimeGenerated
+    , SamAccountName = SamAccountName_s
+    , adminCount = adminCount_s
+    , SID = SID_s
+    , Name = Name_s
+    , ObjectGUID = ObjectGUID_g
+    , DistinguishedName = DistinguishedName_s
+    , msDSPrincipalName = msDSPrincipalName_s
+    , GroupCategory = GroupCategory_s

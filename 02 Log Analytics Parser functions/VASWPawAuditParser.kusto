@@ -1,0 +1,6 @@
+//VASWPawAuditParser
+VASW_pawaudit_CL 
+| summarize arg_max(TimeGenerated,*) by distinguishedName_s
+| where TimeGenerated >= ago(24h)
+| project TimeGenerated
+    , distinguishedName = distinguishedName_s
