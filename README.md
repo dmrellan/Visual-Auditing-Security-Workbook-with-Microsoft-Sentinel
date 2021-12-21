@@ -6,7 +6,7 @@
 - [Author](https://github.com/dmrellan/Visual-Auditing-Security-with-Microsoft-Sentinel#author)
 - [Acknowledgment](https://github.com/dmrellan/Visual-Auditing-Security-with-Microsoft-Sentinel#acknowledgment)
 
-## Overvew
+## Overview
 
 The _Visual Auditing Security Workbook_ project is a set of scenarios in an Azure Workbook for Microsoft Sentinel that pulls information from your Active Directory Domain Controllers and enables security teams to quickly detect insights about their Active Directory configuration, operations, and risks.
 
