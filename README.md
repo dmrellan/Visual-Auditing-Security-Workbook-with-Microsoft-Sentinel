@@ -1,4 +1,10 @@
 # Visual Auditing Security Workbook with Microsoft Sentinel
+## Content
+- [Overview](https://github.com/dmrellan/Visual-Auditing-Security-with-Microsoft-Sentinel#overvew)
+- [Requirements](https://github.com/dmrellan/Visual-Auditing-Security-with-Microsoft-Sentinel#requirements)
+- [Deployment steps](https://github.com/dmrellan/Visual-Auditing-Security-with-Microsoft-Sentinel#deployment-steps)
+- [Author](https://github.com/dmrellan/Visual-Auditing-Security-with-Microsoft-Sentinel#author)
+- [Acknowledgment](https://github.com/dmrellan/Visual-Auditing-Security-with-Microsoft-Sentinel#acknowledgment)
 
 ## Overvew
 
