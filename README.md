@@ -142,8 +142,7 @@ To start sending events from Domain Controllers to Microsoft Sentinel, firstly i
 4. Remove the default workbook code and paste the code of **Visual Auditing Security Workbook.workbook**
 5. Click **apply**.
 6. Configure the parameters:
- - Log Analytics workspace.
- - Time Range (default 7 days).
+ - Microsoft Sentinel workspace.
  - ms-mcs-AdmPwd in LAPS audit tab. You can get your GUID by running the following code:
     
     <pre><code>$rootdse = Get-ADRootDSE
