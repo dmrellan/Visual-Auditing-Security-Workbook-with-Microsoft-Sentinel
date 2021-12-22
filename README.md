@@ -111,7 +111,7 @@ Make sure that proper audit settings (SACLs) are in place on the objects to audi
 9. Check the box **all extended rights**.
 10. Check the box **Read ms-Mcs-AdmPwd**.
 11. Click **ok** and close out of all the security properties.
-![image](https://user-images.githubusercontent.com/35997289/147013327-ac81e1bd-8f35-4f75-af5e-5c764700b397.png)
+	![image](https://user-images.githubusercontent.com/35997289/147013327-ac81e1bd-8f35-4f75-af5e-5c764700b397.png)
 
 
 ### 3 - Microsoft Sentinel: Configure AD integration and events collection
