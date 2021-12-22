@@ -17,8 +17,6 @@
 
 The _Visual Auditing Security Workbook_ project is a set of scenarios in an Azure Workbook for Microsoft Sentinel that pulls information from your Active Directory Domain Controllers and enables security teams to quickly detect insights about their Active Directory configuration, operations, and risks.
 
-![Scenario](https://user-images.githubusercontent.com/35997289/146847937-ff196df8-82f5-4953-87a5-783b7fd4fd58.jpg)
-
 This workbook visualizes information from two Data Sources:
 - **Security Events** from Domain Controllers and common **Events**.
 - Data sent by a **Custom HTTP Data Collector API**. (Custom Logs format)
@@ -28,57 +26,57 @@ The current Visual Auditing Security Workbook includes 11 scenarios below:
 
 ![image](https://user-images.githubusercontent.com/35997289/146782431-46aba436-71bc-452f-89c8-d3380562e59d.png)
 
-- **User Hygiene**: Shows the overall state of the user population based on high-privilege users, users that have not logged in for an extended period, users that have not changed the password for an extended period, and users with Password Never Expired set.
+1 - **User Hygiene**: Shows the overall state of the user population based on high-privilege users, users that have not logged in for an extended period, users that have not changed the password for an extended period, and users with Password Never Expired set.
 ![01 User Hygiene](https://user-images.githubusercontent.com/35997289/146858944-b030be17-4e0a-49b1-aea0-0a919b65edb9.jpg)
 
-- **Computer Hygiene**: Shows which computers within the domain are active with logins. It will present computers based on the Operating System version, with stale logins and passwords.
+2 - **Computer Hygiene**: Shows which computers within the domain are active with logins. It will present computers based on the Operating System version, with stale logins and passwords.
 ![02 Computer Hygiene](https://user-images.githubusercontent.com/35997289/146858966-8c201466-78b7-422d-b3d6-27815f27c312.jpg)
 
-- **LAPS Deploy**: Local Administrative Password Solution (LAPS) Deploy tab shows how many computers have been configured by the LAPS solution. It will show which Operating Systems have LAPS deployed and the up-to-dateness vector on the LAPS Password.
+3 - **LAPS Deploy**: Local Administrative Password Solution (LAPS) Deploy tab shows how many computers have been configured by the LAPS solution. It will show which Operating Systems have LAPS deployed and the up-to-dateness vector on the LAPS Password.
 ![03 LAPS Deploy](https://user-images.githubusercontent.com/35997289/146858975-d6794574-dc27-4c9d-a7b7-91cc137a9255.jpg)
 
-- **LAPS Audit**: This tab shows which users retrieve the passwords for the local systems to use locally. LAPS Auditing helps unveil which user account has accessed the local administrator’s password of a given computer.
+4 - **LAPS Audit**: This tab shows which users retrieve the passwords for the local systems to use locally. LAPS Auditing helps unveil which user account has accessed the local administrator’s password of a given computer.
 ![04 LAPS Audit](https://user-images.githubusercontent.com/35997289/146859148-8e486ed9-cd0e-4aa3-8435-62fe216c39a9.jpg)
 
-- **Non-Existent users activity**: This tab tracks the non-existent and potentially _sprayed_ accounts in your environment. These are accounts generating failed logins (4625s) in which the sub-status code references a non-existent account. (Note: these failed logins are distinct from existing accounts with incorrect passwords). You should look especially for machines hosting – or accounts exhibiting – a pattern of non-existent user types of failed logins. These can be early indicators of attack or attempted attack.
+5 - **Non-Existent users activity**: This tab tracks the non-existent and potentially _sprayed_ accounts in your environment. These are accounts generating failed logins (4625s) in which the sub-status code references a non-existent account. (Note: these failed logins are distinct from existing accounts with incorrect passwords). You should look especially for machines hosting – or accounts exhibiting – a pattern of non-existent user types of failed logins. These can be early indicators of attack or attempted attack.
 ![05 Non-Existent users](https://user-images.githubusercontent.com/35997289/146858992-d0bbddd4-0373-4203-a8c2-7e2885cbc27a.jpg)
 
-- **Group Changes**: This tab will show which Active Directory Groups have been changed. It will also show which users are making the most number of changes.
+6 - **Group Changes**: This tab will show which Active Directory Groups have been changed. It will also show which users are making the most number of changes.
 ![06 Group Changes](https://user-images.githubusercontent.com/35997289/146858999-6e4c4bac-1024-4d2a-bf93-35815c0c1df1.jpg)
 
-- **User Authentication**: This tab will show which users are authenticating. It gives an overview of the authentication being performed by a specific user.
+7 - **User Authentication**: This tab will show which users are authenticating. It gives an overview of the authentication being performed by a specific user.
 ![07 User Auth](https://user-images.githubusercontent.com/35997289/146859005-4afa0b4b-bbfe-4af6-838b-c96b3499fed9.jpg)
 
-- **SChannel**: This tab will show where SChannel authentication is occurring. It will show which computer that was initiating the Schannel authentication. You will need to temporarily install the MMA on the webserver or whatever server you suspect is using SSL or another deprecated encryption method. Then you will be able to see the actual cipher suite used and remediate the deprecated ones in use.
+8 - **SChannel**: This tab will show where SChannel authentication is occurring. It will show which computer that was initiating the Schannel authentication. You will need to temporarily install the MMA on the webserver or whatever server you suspect is using SSL or another deprecated encryption method. Then you will be able to see the actual cipher suite used and remediate the deprecated ones in use.
 ![08 SChannel](https://user-images.githubusercontent.com/35997289/146859019-5de1c645-fcde-458c-9f03-ecc82eb272b6.jpg)
 
-- **Security Log Clear**: This tab shows where the security log has been cleared and by which user.
+9 - **Security Log Clear**: This tab shows where the security log has been cleared and by which user.
 ![09 Security Log Clear](https://user-images.githubusercontent.com/35997289/146859028-8775c5b2-326d-443f-9787-987791ce38f3.jpg)
 
-- **Audit Policy Changes**: This tab shows an attacker’s attempts to cover his tracks as he potentially has created environmental persistence
+10 - **Audit Policy Changes**: This tab shows an attacker’s attempts to cover his tracks as he potentially has created environmental persistence
 ![10 Audit Policy Changes](https://user-images.githubusercontent.com/35997289/146859036-2ed68690-4756-4482-aeb8-d4a7e6ae02cc.jpg)
 
-- **User Management**: This tab shows the most common user management activities within the forest. User Management in a typical environment is relatively static and does not change much unless something is altered.
+11 - **User Management**: This tab shows the most common user management activities within the forest. User Management in a typical environment is relatively static and does not change much unless something is altered.
 ![11 User Management](https://user-images.githubusercontent.com/35997289/146859040-6912a3be-5e9c-411d-8c86-38b3f2c36b67.jpg)
 
  
-**Note**: We recommend using this workbook together with the **Insecure Protocols** workbook of Microsoft Sentinel to identify their use and help remove Insecure Protocols from your Active Directory and Azure Active Directory.
+**Note**: Apart from this workbook, we recommend using the **Insecure Protocols** workbook of Microsoft Sentinel to identify their use and help to remove Insecure Protocols from your Active Directory and Azure Active Directory.
 
 ## Requirements
-To be able to use all scenarios of this workbook, you will need to meet the following requirements:
+To be able to consume all scenarios described, it is necessary to meet the following requirements:
 1. Have an enabled Azure Subscription with a **Microsoft Sentinel workspace**.
 2. Create a new Group Policy Object to enable the necessary **audit policies** and **registry keys** in your Active Directory (applied to Domain Controllers).
 3. Configure SACL for **Auditing LAPS**
-4. Enable **all Microsoft Defender for Cloud plans** in the Microsoft Sentinel workspace and configure "All events" in data collection.
-5. Deploy a server to act as **Log Analytics Gateway** and run the **Custom HTTP Data Collector API (PowerShell script)**.
-6. **Connect** your Domain Controllers to Microsoft Sentinel throughout a Log Analytics Gateway by deploying the Microsoft Monitoring Agent.
+4. Deploy a server as **Log Analytics Gateway**.
+5. Configure the **Custom HTTP Data Collector API (PowerShell script)**.
+6. **Connect** your Domain Controllers to Microsoft Sentinel throughout the Log Analytics Gateway (req. 4) by deploying the Microsoft Monitoring Agent.
 
 ## Deployment steps
 
 ### 1 - Advanced audit policies and registry keys configuration in Domain Controllers.
 
 #### Advanced Audit Policies
-To generate the Security Events which will be collected and shown in the workbook, it is needed to configure a new GPO, applied to Domain Controllers, to enable the following audit policies:
+To generate the necessary Security Events in the Domain Controllers it is needed to configure a new GPO (applied to Domain Controllers) to enable the following audit policies:
 
 **Computer Configuration\Policies\Windows Settings\Security Settings\Advanced Audit Policy Configuration\Audit Policies\**
 - **DS Access**
@@ -96,12 +94,12 @@ To generate the Security Events which will be collected and shown in the workboo
   - Audit Other Logon/Logoff Events - _Success, Failure_
 
 #### Registry Keys
-To generate the Events related with SChannel user, it is needed to configure the following registry key:
+To generate the Events related with SChannel use, it is needed to configure the following registry key:
 - **HKLM\SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\EventLogging**
   - Change the value to **7**
 
 ### 2 - Audit LAPS password retrievals: Configure SACL
-Make sure that proper audit settings (SACLs) are in place on the objects to audit. To audit LAPS password retrieval it is needed to configure the audit settings at the root of the domain.
+Make sure that proper audit settings (SACLs) are in place on the objects to audit. Follow next steps to audit LAPS password retrieval by configuring the audit settings at the root of the domain.
 1. Open **Active Directory Users and Computers**.
 2. Enable **View\Advanced Features**.
 3. Select root of the domain.
@@ -113,23 +111,23 @@ Make sure that proper audit settings (SACLs) are in place on the objects to audi
 9. Check the box **all extended rights**.
 10. Check the box **Read ms-Mcs-AdmPwd**.
 11. Click **ok** and close out of all the security properties.
-![image](https://user-images.githubusercontent.com/35997289/146851785-1904f00e-2121-414c-8ffb-723f2812f1f2.png)
+![image](https://user-images.githubusercontent.com/35997289/147013327-ac81e1bd-8f35-4f75-af5e-5c764700b397.png)
 
 
 ### 3 - Microsoft Sentinel: Configure AD integration and events collection
-Once advanced audit policies and registry keys are configured, the next step is to configure the Data Sources in Microsoft Sentinel.
+Once advanced audit policies and registry keys are configured, you need to configure the Microsoft Sentinel data sources.
 #### Active Directory Integration
 1. Go to your Microsoft Sentinel > Settings > Workspace Settings > Computer Groups > Active Directory and check the **Import active directory group memberships from computers**.
 2. Click **Apply**.
 
-![image](https://user-images.githubusercontent.com/35997289/146852114-fd588bbd-7ff7-4e39-8ac8-c5a8d46d0b89.png)
+![image](https://user-images.githubusercontent.com/35997289/147013407-29576bd2-476c-4a8e-aa15-0469691abcd4.png)
 
 #### Events Collection
 1. Go to your Microsoft Sentinel > Settings > Workspace Settings > Agents configuration
 2. Click +Add windows event log and write **System**
 3. Click on **Information** box to collect only the Information Events from System log and the apply.
 
-![image](https://user-images.githubusercontent.com/35997289/146852267-fea98016-cb7b-4866-a435-340114823254.png)
+![image](https://user-images.githubusercontent.com/35997289/147013426-5fa48d55-a39d-4283-bde2-5acaaba1bcc7.png)
 
 
 #### SecurityEvents collection
@@ -148,33 +146,52 @@ To enable **all Microsoft Defender for Cloud plans** in the Microsoft Sentinel w
 6. Go to **Data collection**.
 7. Click on **All events** and **save**.
 
-![image](https://user-images.githubusercontent.com/35997289/146852513-c86028b3-e551-484e-b2e6-12738ff52e6e.png)
+![image](https://user-images.githubusercontent.com/35997289/147013447-419879bf-c1ca-456a-897e-b1eb46f7e90e.png)
 
 ### 4 - Setup the Custom HTTP Data Collector API (PowerShell script) to populate Custom Logs.
-The workbook need Active Directory Objects (users, computers, groups, etc) information to populate Hygiene and LAPS tabs. This information is collected by the custom data collector and uploaded to Microsoft Sentinel in Custom Logs format. To configure the Custom HTTP Data Collector it is needed to follow these steps:
-1. Install the **RSAT AD DS Powershell module** in the Log Analytics Gateway server.Open an elevated powershell console and run the command:
+The workbook need Active Directory Objects (users, computers, groups, etc) information to populate Hygiene and LAPS tabs. This information is collected by the custom data collector and uploaded to Microsoft Sentinel as Custom Logs format.
+Follow the below steps to configure the Custom HTTP Data Collector:
+1. Use the Log Analytics Gateway servers to run the Custom HTTP Data Collector.
+2. Open an elevated PowerShell console and install the **RSAT AD DS Powershell module** by running the command:
 <pre><code>Install-windowsfeature RSAT-AD-PowerShell</code></pre>
-2. Personalize the **ADObjectsToALA_v1.0.ps1** (parameters section) and **domainlist.csv** files to your environment.
- - **Domainlist.csv**: This file needs to be manually created and should contain the headers line (dc,isLAPSDeployed) and one Domain Controller name and isLAPSDeployed value (comma separated) per line from each domain in scope.
+3. Fill and personalize the parameters section of the **ADObjectsToALA_v1.0.ps1** PS script. 
+4. Fill the **domainlist.csv** according your environment. This file needs to have the headers line (dc,isLAPSDeployed) and one Domain Controller name and isLAPSDeployed value (comma separated) per line from each domain in scope as you can see in the following image.
 
-![image](https://user-images.githubusercontent.com/35997289/146853174-529f13f6-7733-4f4f-8b63-169ea9d70f10.png)
+![image](https://user-images.githubusercontent.com/35997289/147013878-80b68c94-1a30-4bb5-a8fb-dc1554e60104.png)
 
-3. Create a scheduled task to run the script **daily**.
+5. Create a scheduled task to run the PowerShell script **daily**.
+6. To verify that the PowerShell script is running well, execute it manually and check if the Custom Logs are created in the Microsoft Sentinel workspace.
+	Note: First you execute the script you probably need wait 5 to 10 minutes before seeing the logs in Microsoft Sentinel.
+	
+![image](https://user-images.githubusercontent.com/35997289/147014013-4444d9d8-888a-41f8-9f58-17242888a449.png)
 
-### 5 - Create the Log Analytics Parser funtions in your Microsoft Sentinel.
-After configuring the Custom HTTP Data Collector API, it is needed to create several Log Analytics Parser functions in Microsoft Sentinel. The workbook uses these functions to process the information received from the data collector and to calculate new fields based on the information collected. Parser functions need to be created precisely with these names:
+
+### 5 - Create the Log Analytics Parser funtions in Microsoft Sentinel.
+The workbook kusto queries refer many times to five Log Analytics Parser functions that need to be created or, on the contrary, the workbook will fail in different sections. These functions process the information received in Custom Logs format and calculate new fields based on raw data. Parser functions need to be created precisely with these names:
 - VASWUsersParser
 - VASWComputersParser
 - VASWGroupParser
 - VASWAdminAuditParser
 - VASWPawAuditParser
+![image](https://user-images.githubusercontent.com/35997289/147014420-2de4ee65-f3bb-4bb6-a8b3-b061956075ae.png)
 
-### 6 - Connect your Domain Controllers to Microsoft Sentinel.
-To start sending events from Domain Controllers to Microsoft Sentinel, firstly it is needed to deploy the Log Analytics Gateway in the provided server to act as a gateway between Domain Controllers and Azure. Then, Microsoft Monitoring Agent will be deployed on Domain Controllers to connect to Microsoft Sentinel trought the gateway. To do that, follow these steps:
-1. Download and **Install** the Log Analytics Gateway software in the provided server. This software can be downloaded from the workspace: _Microsoft Sentinel > Settings > Workspace Settings > Agents management > Log Analytics Gateway_. The Log Analytics Gateway requires access to the four endpoints described [here](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/log-analytics-agent).
-	- Note: In the installation wizard you will need to introduce the Log Analytics Gateway port. This port will be used when Microsoft Monitoring Agent is installed on **Domain Controllers**, in the proxy configuration step.
-2. Install the **Microsoft Monitoring Agent** in the **Log Analytics Gateway server** and connect it to the Microsoft Sentinel with the WorkspaceId and PrimaryKey which are located in _Microsoft Sentinel > Settings > Workspace Settings > Agents management_.
-3. Install the **Microsoft Monitoring Agent** in **Domain Controllers** and connect them to Microsoft Sentinel throught Log Analtyics Gateway server. On each Domain Controller, Log Analytics Gateway need to be configured in the Proxy Setting tab.
+
+### 6 - Connect Domain Controllers to Microsoft Sentinel.
+To connect Domain Controllers to Microsoft Sentinel we use the Microsoft Monitoring Agent (MMA). Network communication between the MMA on Domain Contollers and Microsoft Sentinel is not direct. We use the Log Analytics Gateway as proxy for MMAs on DCs so, as you can see in the following image, the only server with network communication to the Microsoft Sentinel endpoints is the Log Analytics Gateway.
+
+![image](https://user-images.githubusercontent.com/35997289/147012564-fc09a31d-aa45-4f66-be57-e5d6d7680a3b.png)
+
+Necessary steps to deploy Log Analytics Gateway and Microsoft Monitoring Agents are:
+#### Log Analytics Gateway server
+1. Download and **Install** the Log Analytics Gateway software on the provided server. This software can be downloaded from the workspace: _Microsoft Sentinel > Settings > Workspace Settings > Agents management > Log Analytics Gateway_. The Log Analytics Gateway requires access to the four Microsoft Sentinel (Log Analytics) endpoints described [here](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/log-analytics-agent).
+	- Note: In the Log Analytics Gateway installation wizard it is needed to configure the Log Analytics Gateway port. This port will be used when Microsoft Monitoring Agent is installed on **Domain Controllers**, in the proxy configuration step.
+
+![image](https://user-images.githubusercontent.com/35997289/147014902-40c62a8e-3578-420b-837b-83d2d659f534.png)
+
+2. Install the **Microsoft Monitoring Agent** and connect it to the Microsoft Sentinel with the WorkspaceId and PrimaryKey which are located in _Microsoft Sentinel > Settings > Workspace Settings > Agents management_.
+
+#### Microsoft Monitoring Agents on each Domain Controller
+1. Install the **Microsoft Monitoring Agent** and connect it to Microsoft Sentinel throught Log Analtyics Gateway server. Log Analytics Gateway need to be configured in the Proxy Setting tab with the port configured.
 
 ### 7 - Import the Visual Auditing Security Workbook
 1. Go to Microsoft Sentinel > Workbooks.
@@ -182,9 +199,9 @@ To start sending events from Domain Controllers to Microsoft Sentinel, firstly i
 3. Click on edit and go to **Advanced Editor**.
 4. Remove the default workbook code and paste the code of **Visual Auditing Security Workbook.workbook**
 5. Click **apply**.
-6. Configure the parameters:
- - Microsoft Sentinel workspace.
- - ms-mcs-AdmPwd in LAPS audit tab. You can get your GUID by running the following code:
+6. Configure the workbook parameters:
+	- Microsoft Sentinel workspace.
+	- LAPSPasswordGUID (ms-mcs-AdmPwd). This parameter is only visible in the workbook edition mode. You need to enter the ms-mcs-AdmPwd GUID of your environment. It can be queried by running the following code:
     
     <pre><code>$rootdse = Get-ADRootDSE
     $GUIDs = Get-ADObject -SearchBase ($rootdse.SchemaNamingContext) -LDAPFilter "(schemaidguid=*)" -Properties lDAPDisplayName,schemaIDGUID
@@ -200,7 +217,7 @@ To start sending events from Domain Controllers to Microsoft Sentinel, firstly i
 
 
 ## Author
-The Visual Auditing Security Workbook was developed by **Diego Martínez Rellán (dmrellan) - Microsoft**. It is inspired by the Visual Auditing Security Toolkit (VAST) service from Microsoft Support (currently retired) developed by Brian Delaney and Jon Shectman.
+The Visual Auditing Security Workbook was developed by **Diego Martínez Rellán (dmrellan) - Microsoft**. It was inspired by the Microsoft Support - Visual Auditing Security Toolkit (VAST) service (currently retired) developed originally by Brian Delaney and Jon Shectman.
 
 ## Acknowledgment
 Special thanks to my co-worker Alvaro Jiménez Contreras for his help during the evaluation of this solution's development tasks and test phase.
