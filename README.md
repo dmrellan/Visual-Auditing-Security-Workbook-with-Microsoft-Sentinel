@@ -173,6 +173,7 @@ The workbook kusto queries refer many times to five Log Analytics Parser functio
 - VASWGroupParser
 - VASWAdminAuditParser
 - VASWPawAuditParser
+
 ![image](https://user-images.githubusercontent.com/35997289/147014420-2de4ee65-f3bb-4bb6-a8b3-b061956075ae.png)
 
 
@@ -220,5 +221,4 @@ Necessary steps to deploy Log Analytics Gateway and Microsoft Monitoring Agents 
 The Visual Auditing Security Workbook was developed by **Diego Martínez Rellán (dmrellan) - Microsoft**. It was inspired by the Microsoft Support - Visual Auditing Security Toolkit (VAST) service (currently retired) developed originally by Brian Delaney and Jon Shectman.
 
 ## Acknowledgment
-Special thanks to my co-worker Alvaro Jiménez Contreras for his help during the evaluation of this solution's development tasks and test phase.
-
+My special thanks to my coworker _**Alvaro Jiménez Contreras**_ for his help during this solution's evaluation development tasks and test phase.
