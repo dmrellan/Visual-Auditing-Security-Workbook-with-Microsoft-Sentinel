@@ -27,37 +27,37 @@ The current Visual Auditing Security Workbook includes 11 scenarios below:
 ![image](https://user-images.githubusercontent.com/35997289/146782431-46aba436-71bc-452f-89c8-d3380562e59d.png)
 
 1 - **User Hygiene**: Shows the overall state of the user population based on high-privilege users, users that have not logged in for an extended period, users that have not changed the password for an extended period, and users with Password Never Expired set.
-![01 User Hygiene](https://user-images.githubusercontent.com/35997289/146858944-b030be17-4e0a-49b1-aea0-0a919b65edb9.jpg)
+![image](https://user-images.githubusercontent.com/35997289/147017080-7d6f40be-ebed-42c3-b770-d97d1a0c11cb.png)
 
 2 - **Computer Hygiene**: Shows which computers within the domain are active with logins. It will present computers based on the Operating System version, with stale logins and passwords.
-![02 Computer Hygiene](https://user-images.githubusercontent.com/35997289/146858966-8c201466-78b7-422d-b3d6-27815f27c312.jpg)
+![image](https://user-images.githubusercontent.com/35997289/147017149-01717017-5b80-4326-a453-b9104e6fd2ae.png)
 
 3 - **LAPS Deploy**: Local Administrative Password Solution (LAPS) Deploy tab shows how many computers have been configured by the LAPS solution. It will show which Operating Systems have LAPS deployed and the up-to-dateness vector on the LAPS Password.
-![03 LAPS Deploy](https://user-images.githubusercontent.com/35997289/146858975-d6794574-dc27-4c9d-a7b7-91cc137a9255.jpg)
+![image](https://user-images.githubusercontent.com/35997289/147017248-9d10ee1b-603c-4ba8-8567-da5e5c550f0c.png)
 
 4 - **LAPS Audit**: This tab shows which users retrieve the passwords for the local systems to use locally. LAPS Auditing helps unveil which user account has accessed the local administrator’s password of a given computer.
-![04 LAPS Audit](https://user-images.githubusercontent.com/35997289/146859148-8e486ed9-cd0e-4aa3-8435-62fe216c39a9.jpg)
+![image](https://user-images.githubusercontent.com/35997289/147017324-ac386684-34d4-4473-85ce-897f07d57ca6.png)
 
 5 - **Non-Existent users activity**: This tab tracks the non-existent and potentially _sprayed_ accounts in your environment. These are accounts generating failed logins (4625s) in which the sub-status code references a non-existent account. (Note: these failed logins are distinct from existing accounts with incorrect passwords). You should look especially for machines hosting – or accounts exhibiting – a pattern of non-existent user types of failed logins. These can be early indicators of attack or attempted attack.
-![05 Non-Existent users](https://user-images.githubusercontent.com/35997289/146858992-d0bbddd4-0373-4203-a8c2-7e2885cbc27a.jpg)
+![image](https://user-images.githubusercontent.com/35997289/147017417-cd32ce2b-322b-4a91-bfa5-faa073066b88.png)
 
 6 - **Group Changes**: This tab will show which Active Directory Groups have been changed. It will also show which users are making the most number of changes.
-![06 Group Changes](https://user-images.githubusercontent.com/35997289/146858999-6e4c4bac-1024-4d2a-bf93-35815c0c1df1.jpg)
+![image](https://user-images.githubusercontent.com/35997289/147017480-2e83b9bc-5597-4b18-b446-71fc4fbdd1b4.png)
 
 7 - **User Authentication**: This tab will show which users are authenticating. It gives an overview of the authentication being performed by a specific user.
-![07 User Auth](https://user-images.githubusercontent.com/35997289/146859005-4afa0b4b-bbfe-4af6-838b-c96b3499fed9.jpg)
+![image](https://user-images.githubusercontent.com/35997289/147017526-1dea44a0-1c93-433b-9a90-d07dceadf4a8.png)
 
 8 - **SChannel**: This tab will show where SChannel authentication is occurring. It will show which computer that was initiating the Schannel authentication. You will need to temporarily install the MMA on the webserver or whatever server you suspect is using SSL or another deprecated encryption method. Then you will be able to see the actual cipher suite used and remediate the deprecated ones in use.
-![08 SChannel](https://user-images.githubusercontent.com/35997289/146859019-5de1c645-fcde-458c-9f03-ecc82eb272b6.jpg)
+![image](https://user-images.githubusercontent.com/35997289/147017588-79c03c74-91f2-44f4-b56b-5eca2612849e.png)
 
 9 - **Security Log Clear**: This tab shows where the security log has been cleared and by which user.
-![09 Security Log Clear](https://user-images.githubusercontent.com/35997289/146859028-8775c5b2-326d-443f-9787-987791ce38f3.jpg)
+![image](https://user-images.githubusercontent.com/35997289/147017644-48f855b9-11ac-4f21-977c-c4c216f0d51c.png)
 
 10 - **Audit Policy Changes**: This tab shows an attacker’s attempts to cover his tracks as he potentially has created environmental persistence
-![10 Audit Policy Changes](https://user-images.githubusercontent.com/35997289/146859036-2ed68690-4756-4482-aeb8-d4a7e6ae02cc.jpg)
+![image](https://user-images.githubusercontent.com/35997289/147017741-52b9ee10-18e8-41c6-bc17-82de52c59bb3.png)
 
 11 - **User Management**: This tab shows the most common user management activities within the forest. User Management in a typical environment is relatively static and does not change much unless something is altered.
-![11 User Management](https://user-images.githubusercontent.com/35997289/146859040-6912a3be-5e9c-411d-8c86-38b3f2c36b67.jpg)
+![image](https://user-images.githubusercontent.com/35997289/147017934-f636c739-9848-4ef4-b03f-e0f16bc951a1.png)
 
  
 **Note**: Apart from this workbook, we recommend using the **Insecure Protocols** workbook of Microsoft Sentinel to identify their use and help to remove Insecure Protocols from your Active Directory and Azure Active Directory.
