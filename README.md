@@ -225,7 +225,7 @@ The Visual Auditing Security Workbook was developed by **Diego Martínez Rellán
 My special thanks to my coworker _**Alvaro Jiménez Contreras**_ for his help during this solution's evaluation development tasks and test phase.
 
 ## ChangeLog
-### Version 1.1
+### Version 1.1 (March 9th, 2022)
 #### Custom HTTP Data Collector API
 - Fixed typos in the Powershell script.
 - Improved logging.
