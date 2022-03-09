@@ -12,6 +12,7 @@
 	- [7 - Import the Visual Auditing Security Workbook](https://github.com/dmrellan/Visual-Auditing-Security-Workbook-with-Microsoft-Sentinel#7---import-the-visual-auditing-security-workbook)
 - [Author](https://github.com/dmrellan/Visual-Auditing-Security-with-Microsoft-Sentinel#author)
 - [Acknowledgment](https://github.com/dmrellan/Visual-Auditing-Security-with-Microsoft-Sentinel#acknowledgment)
+- [ChangeLog](https://github.com/dmrellan/Visual-Auditing-Security-Workbook-with-Microsoft-Sentinel#changelog)
 
 ## Overview
 
