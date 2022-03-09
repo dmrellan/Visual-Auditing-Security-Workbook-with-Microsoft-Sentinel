@@ -1,0 +1,37 @@
+//VASWComputersParser
+VASW_computers_CL 
+| summarize arg_max(TimeGenerated,*) by SID_s
+| where TimeGenerated >= ago(24h)
+| project TimeGenerated
+    , SID = SID_s
+    , Enabled = Enabled_s
+    , pwdLastSet = todatetime(pwdLastSet_s)
+    , DNSHostName_s = DNSHostName_s
+    , SamAccountName = SamAccountName_s
+    , accountExpires = case( //A value of 0 or 0x7FFFFFFFFFFFFFFF (9223372036854775807) indicates that the account never expires.
+                            accountExpires_s=="9223372036854775807", todatetime("12/31/9999 23:59:59.999"), 
+                            accountExpires_s=="0", todatetime("01/01/1601"), 
+                            todatetime(accountExpires_s))
+    , ObjectClass = ObjectClass_s
+    , lastLogonTimestamp = todatetime(lastLogonTimestamp_s)
+    , OperatingSystem = OperatingSystem_s
+    , DistinguishedName = DistinguishedName_s
+    , whenCreated = todatetime(whenCreated_s)
+    , userAccountControl = userAccountControl_s
+    , whenChanged = todatetime(whenChanged_s)
+    , Name = Name_s
+    , msDSPrincipalName = msDS_PrincipalName_s
+    , ObjectGUID = ObjectGUID_g
+    , primaryGroupID = primaryGroupID_s
+    , ms_Mcs_AdmPwdExpirationTime_s=column_ifexists('ms_Mcs_AdmPwdExpirationTime_s',"N/A LAPS NOT CONFIGURED")
+| extend LAPSPWDExpiration = todatetime(ms_Mcs_AdmPwdExpirationTime_s)
+| extend isLAPSDeployed = iif(isnull(LAPSPWDExpiration), "False","True") 
+| extend isDisabled = iif(binary_and(toint(userAccountControl),2)>0,"True","False")
+| extend isServerOS = iif(OperatingSystem contains "server","True","False")
+| extend isDC = iif(primaryGroupID == 516 or primaryGroupID ==521,"True","False")
+| extend DaysSinceLastLogon = iif(isnotnull(datetime_diff('day',now(),lastLogonTimestamp)),datetime_diff('day',now(),lastLogonTimestamp),36000)
+| extend DaysSincePasswordChanged = iif(isnotnull(datetime_diff('day',now(),pwdLastSet)),datetime_diff('day',now(),pwdLastSet),36000)
+| extend isPasswordNeverExpires = iif(binary_and(toint(userAccountControl),65536)>0,"True","False")
+| extend DaysUntilLAPSUpdate=iif(isLAPSDeployed=="True",datetime_diff('day',LAPSPWDExpiration,now()),long(null))
+| extend LAPSUpdateCurrent = iif(isLAPSDeployed=="True",iff(DaysUntilLAPSUpdate < 0, 0, 1),1)
+
