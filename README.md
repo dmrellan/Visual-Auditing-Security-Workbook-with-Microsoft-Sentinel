@@ -225,10 +225,10 @@ The Visual Auditing Security Workbook was developed by **Diego Martínez Rellán
 My special thanks to my coworker _**Alvaro Jiménez Contreras**_ for his help during this solution's evaluation development tasks and test phase.
 
 ## ChangeLog
-### Custom HTTP Data Collector API
-- v1.1:
-  - Fixed typos in the Powershell script.
-  - Improved logging.
-  - The maximum number of elements by post is 10k.
-### Log Analytics Parser Functions
+### Version 1.1
+#### Custom HTTP Data Collector API
+- Fixed typos in the Powershell script.
+- Improved logging.
+- The maximum number of elements by post is 10k.
+#### Log Analytics Parser Functions
 - VASWComputersParser.kusto: Fixed an issue when LAPS is not deployed.
