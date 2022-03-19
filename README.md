@@ -11,7 +11,6 @@
 	- [6 - Connect your Domain Controllers to Microsoft Sentinel.](https://github.com/dmrellan/Visual-Auditing-Security-Workbook-with-Microsoft-Sentinel#6---connect-your-domain-controllers-to-microsoft-sentinel)
 	- [7 - Import the Visual Auditing Security Workbook](https://github.com/dmrellan/Visual-Auditing-Security-Workbook-with-Microsoft-Sentinel#7---import-the-visual-auditing-security-workbook)
 - [Author](https://github.com/dmrellan/Visual-Auditing-Security-with-Microsoft-Sentinel#author)
-- [Acknowledgment](https://github.com/dmrellan/Visual-Auditing-Security-with-Microsoft-Sentinel#acknowledgment)
 - [ChangeLog](https://github.com/dmrellan/Visual-Auditing-Security-Workbook-with-Microsoft-Sentinel#changelog)
 
 ## Overview
@@ -221,8 +220,6 @@ Necessary steps to deploy Log Analytics Gateway and Microsoft Monitoring Agents 
 ## Author
 The Visual Auditing Security Workbook was developed by **Diego Martínez Rellán (dmrellan) - Microsoft**. It was inspired by the Microsoft Support - Visual Auditing Security Toolkit (VAST) service (currently retired) developed originally by Brian Delaney and Jon Shectman.
 
-## Acknowledgment
-My special thanks to my coworker _**Alvaro Jiménez Contreras**_ for his help during this solution's evaluation development tasks and test phase.
 
 ## ChangeLog
 ### Version 1.1 (March 9th, 2022)
