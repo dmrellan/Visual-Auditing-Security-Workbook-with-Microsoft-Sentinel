@@ -156,7 +156,7 @@ Follow the below steps to configure the Custom HTTP Data Collector:
 <pre><code>Install-windowsfeature RSAT-AD-PowerShell</code></pre>
 3. Fill and personalize the parameters section of the **ADObjectsToALA_v1.1.ps1** PS script.
 3.1. Before executing the PowerShell script **you need** to create the source for event log **"VASWDataToSentinel"** by using the cmdlet:
-	New-EventLog –LogName Application –Source "VASWDataToSentinel"
+<pre><code>New-EventLog –LogName Application –Source "VASWDataToSentinel"</code></pre>
 4. Fill the **domainlist.csv** according your environment. This file needs to have the headers line (dc,isLAPSDeployed) and one Domain Controller name and isLAPSDeployed value (comma separated) per line from each domain in scope as you can see in the following image.
 
 ![image](https://user-images.githubusercontent.com/35997289/147013878-80b68c94-1a30-4bb5-a8fb-dc1554e60104.png)
