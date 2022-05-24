@@ -155,14 +155,14 @@ Follow the below steps to configure the Custom HTTP Data Collector:
 2. Open an elevated PowerShell console and install the **RSAT AD DS Powershell module** by running the command:
 <pre><code>Install-windowsfeature RSAT-AD-PowerShell</code></pre>
 3. Fill and personalize the parameters section of the **ADObjectsToALA_v1.1.ps1** PS script.
-3.1. Before executing the PowerShell script **you need** to create the source for event log **"VASWDataToSentinel"** by using the cmdlet:
+4. Before executing the PowerShell script **you need** to create the source for event log **"VASWDataToSentinel"** by using the cmdlet:
 <pre><code>New-EventLog –LogName Application –Source "VASWDataToSentinel"</code></pre>
-4. Fill the **domainlist.csv** according your environment. This file needs to have the headers line (dc,isLAPSDeployed) and one Domain Controller name and isLAPSDeployed value (comma separated) per line from each domain in scope as you can see in the following image.
+5. Fill the **domainlist.csv** according your environment. This file needs to have the headers line (dc,isLAPSDeployed) and one Domain Controller name and isLAPSDeployed value (comma separated) per line from each domain in scope as you can see in the following image.
 
 ![image](https://user-images.githubusercontent.com/35997289/147013878-80b68c94-1a30-4bb5-a8fb-dc1554e60104.png)
 
-5. Create a scheduled task to run the PowerShell script **daily**.
-6. To verify that the PowerShell script is running well, execute it manually and check if the Custom Logs are created in the Microsoft Sentinel workspace.
+6. Create a scheduled task to run the PowerShell script **daily**.
+7. To verify that the PowerShell script is running well, execute it manually and check if the Custom Logs are created in the Microsoft Sentinel workspace.
 	Note: First you execute the script you probably need wait 5 to 10 minutes before seeing the logs in Microsoft Sentinel.
 	
 ![image](https://user-images.githubusercontent.com/35997289/147014013-4444d9d8-888a-41f8-9f58-17242888a449.png)
