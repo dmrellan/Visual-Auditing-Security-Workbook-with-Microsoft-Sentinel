@@ -176,6 +176,8 @@ The workbook kusto queries refer many times to five Log Analytics Parser functio
 - VASWAdminAuditParser
 - VASWPawAuditParser
 
+Note: In "**Legacy category**" field you can use "VASWFunctions" value for all functions.
+
 ![image](https://user-images.githubusercontent.com/35997289/147014420-2de4ee65-f3bb-4bb6-a8b3-b061956075ae.png)
 
 
@@ -202,9 +204,11 @@ Necessary steps to deploy Log Analytics Gateway and Microsoft Monitoring Agents 
 3. Click on edit and go to **Advanced Editor**.
 4. Remove the default workbook code and paste the code of **Visual Auditing Security Workbook.workbook**
 5. Click **apply**.
-6. Configure the workbook parameters:
+6. Configure the workbook **parameters and hide parameters**:
+	- Azure Subscription: Hidden parameter, only visible in the workbook edition mode. The subscription where you have your Microsoft Sentinel workspace.
 	- Microsoft Sentinel workspace.
-	- LAPSPasswordGUID (ms-mcs-AdmPwd). This parameter is only visible in the workbook edition mode. You need to enter the ms-mcs-AdmPwd GUID of your environment. It can be queried by running the following code:
+	- DCsGroup DisplayName: Hidden parameter. You need to enter the display name of your Domain Controllers AD Group (for instance, "Domain Controllers"). It has been created to support any language.
+	- LAPSPasswordGUID (ms-mcs-AdmPwd): Hidden parameter. You need to enter the ms-mcs-AdmPwd GUID of your environment. It can be queried by running the following code:
     
     <pre><code>$rootdse = Get-ADRootDSE
     $GUIDs = Get-ADObject -SearchBase ($rootdse.SchemaNamingContext) -LDAPFilter "(schemaidguid=*)" -Properties lDAPDisplayName,schemaIDGUID
@@ -224,6 +228,31 @@ The Visual Auditing Security Workbook was developed by **Diego Martínez Rellán
 
 
 ## ChangeLog
+### Version 1.4 (June 27th, 2022)
+#### Visual Auditing Security Workbook
+- Workbook version: 1.4.
+- New workbook global parameter: "DCsGroup Display Name" (to support different languages).
+- LAPS Deployment:
+	- New "Total count" column to "Total computers by OS and LAPS Deployed" table.
+	- Minor improvements.
+- LAPS Audit: New table "Updated and outdated computers" added.
+- Audit Policy tab: New filter "isComputer".
+- Authentication tab:
+	- New table: "Top 10 Status messages".
+	- New Table: "Total auth events by source (Top 10). Filtered by X account".
+	- Display names added to the EventID dropdown filter.
+	- Minor improvements in the Details table.
+	- Fixed parser logic KQL queries in all tables.
+- Group changes tab:
+	- Added a new column "Total changes" to the change-makers table. The table ordered by this new column.
+- Nonexistent users tab: Visualization improvements.
+- Other minor improvements.
+#### Custom HTTP Data Collector API
+- No modifications. You can continue using _ADObjectsToALA_v1.1.ps1_
+#### Log Analytics Parser Functions
+- No modifications.
+
+
 ### Version 1.1 (March 9th, 2022)
 #### Custom HTTP Data Collector API
 - Fixed typos in the Powershell script.
