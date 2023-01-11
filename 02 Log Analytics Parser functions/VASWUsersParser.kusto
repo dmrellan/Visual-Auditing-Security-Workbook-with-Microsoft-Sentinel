@@ -22,7 +22,7 @@ VASW_users_CL
     , msDSPrincipalName = msDS_PrincipalName_s
     , ObjectGUID = ObjectGUID_g
     , PrincipalsAllowedToRetrieveManagedPassword = PrincipalsAllowedToRetrieveManagedPassword_s
-	, PasswordInterval = msDS_ManagedPasswordInterval_s
+    , PasswordInterval = msDS_ManagedPasswordInterval_s
 | extend isGMSA = iif(ObjectClass == "msDS-GroupManagedServiceAccount","True","False")
 | extend isLockedOut = iif(binary_and(toint(userAccountControl),16)>0,"True","False")
 | extend isDisabled = iif(binary_and(toint(userAccountControl),2)>0,"True","False")
