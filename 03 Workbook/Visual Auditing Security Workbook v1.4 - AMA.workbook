@@ -23,7 +23,7 @@
             "crossComponentResources": [
               "value::all"
             ],
-            "value": "/subscriptions/c3b4a829-dd23-43da-b43e-4a5e8330b28d",
+            "value": "/subscriptions/{subscriptionid}",
             "isHiddenWhenLocked": true,
             "typeSettings": {
               "additionalResourceOptions": []
@@ -44,7 +44,7 @@
             "crossComponentResources": [
               "{Subscription}"
             ],
-            "value": "/subscriptions/c3b4a829-dd23-43da-b43e-4a5e8330b28d/resourceGroups/Sentinel/providers/Microsoft.OperationalInsights/workspaces/SentinelLOG",
+            "value": "/subscriptions/{subscriptionid}/resourceGroups/{resourcegroupname}/providers/microsoft.operationalinsights/workspaces/{workspacename}",
             "typeSettings": {
               "additionalResourceOptions": []
             },
@@ -102,7 +102,7 @@
             "type": 1,
             "description": "ms-Msc-AdmPwd GUID",
             "isRequired": true,
-            "value": "f8a5a9c9-ccef-409a-9ea6-4f4a156a6450",
+            "value": "{lapspwguid}",
             "isHiddenWhenLocked": true
           },
           {
@@ -335,7 +335,8 @@
                   "jsonData": "[\r\n {\"value\": \"True\", \"label\": \"True\"},\r\n {\"value\": \"False\", \"label\": \"False\" }\r\n]\r\n",
                   "timeContext": {
                     "durationMs": 86400000
-                  }
+                  },
+                  "value": "False"
                 },
                 {
                   "id": "46dacff9-1473-4458-b72f-1cd6c9edf634",
@@ -781,20 +782,8 @@
                       ]
                     }
                   }
-                ],
-                "sortBy": [
-                  {
-                    "itemKey": "$gen_thresholds_Logon_1",
-                    "sortOrder": 1
-                  }
                 ]
-              },
-              "sortBy": [
-                {
-                  "itemKey": "$gen_thresholds_Logon_1",
-                  "sortOrder": 1
-                }
-              ]
+              }
             },
             "customWidth": "50",
             "name": "ghgh",
@@ -980,10 +969,6 @@
                     }
                   },
                   {
-                    "columnMatch": "Name",
-                    "formatter": 5
-                  },
-                  {
                     "columnMatch": "SID",
                     "formatter": 5
                   },
@@ -1017,6 +1002,10 @@
                   },
                   {
                     "columnMatch": "userAccountControl",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "Name",
                     "formatter": 5
                   },
                   {
@@ -3393,7 +3382,7 @@
                   "timeContext": {
                     "durationMs": 86400000
                   },
-                  "value": "Failure"
+                  "value": null
                 },
                 {
                   "id": "3ce22325-411f-4550-a89d-b54ac380e76f",
