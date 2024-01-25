@@ -254,7 +254,7 @@ In most situations, your Domain Controllers will be located outside of Azure (on
 
 ![image](https://github.com/dmrellan/Visual-Auditing-Security-Workbook-with-Microsoft-Sentinel/assets/35997289/85e5e4f2-c6f6-4587-a22c-c405bfce483b)
 
-### 7. Import the "Visual Auditing Security Workbook with AMA"
+## 7. Import the "Visual Auditing Security Workbook with AMA"
 1. Go to Microsoft Sentinel > Workbooks.
 2. Click on **Add workbook**.
 3. Click on edit and go to **Advanced Editor**.
