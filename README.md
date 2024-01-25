@@ -2,19 +2,20 @@
 #### Update January 2024 - Azure Monitor Agent (AMA) supported
 
 # Content
-- [Overview](https://github.com/dmrellan/Visual-Auditing-Security-with-Microsoft-Sentinel#overvew)
-- [Prerequisites](https://github.com/dmrellan/Visual-Auditing-Security-with-Microsoft-Sentinel#requirements)
-- [Deployment steps](https://github.com/dmrellan/Visual-Auditing-Security-with-Microsoft-Sentinel#deployment-steps)
-	- [1 - Advanced audit policies and registry keys configuration in Domain Controllers.](https://github.com/dmrellan/Visual-Auditing-Security-Workbook-with-Microsoft-Sentinel#1---advanced-audit-policies-and-registry-keys-configuration-in-domain-controllers)
-	- [2 - Audit LAPS password retrievals: Configure SACL](https://github.com/dmrellan/Visual-Auditing-Security-Workbook-with-Microsoft-Sentinel#2---audit-laps-password-retrievals-configure-sacl)
-	- [3 - Microsoft Sentinel: Configure AD integration and events collection](https://github.com/dmrellan/Visual-Auditing-Security-Workbook-with-Microsoft-Sentinel#3---microsoft-sentinel-configure-ad-integration-and-events-collection)
-	- [4 - Setup the Custom HTTP Data Collector API (PowerShell script) to populate Custom Logs.](https://github.com/dmrellan/Visual-Auditing-Security-Workbook-with-Microsoft-Sentinel#4---setup-the-custom-http-data-collector-api-powershell-script-to-populate-custom-logs)
-	- [5 - Create the Log Analytics Parser funtions in your Microsoft Sentinel.](https://github.com/dmrellan/Visual-Auditing-Security-Workbook-with-Microsoft-Sentinel#5---create-the-log-analytics-parser-funtions-in-your-microsoft-sentinel)
-	- [6 - Connect your Domain Controllers to Microsoft Sentinel.](https://github.com/dmrellan/Visual-Auditing-Security-Workbook-with-Microsoft-Sentinel#6---connect-your-domain-controllers-to-microsoft-sentinel)
-	- [7 - Import the Visual Auditing Security Workbook](https://github.com/dmrellan/Visual-Auditing-Security-Workbook-with-Microsoft-Sentinel#7---import-the-visual-auditing-security-workbook)
-- [Appendix with screenshots](https://github.com/dmrellan/Visual-Auditing-Security-with-Microsoft-Sentinel#Appendix---Screenshoots)
-- [Author](https://github.com/dmrellan/Visual-Auditing-Security-with-Microsoft-Sentinel#author)
-- [ChangeLog](https://github.com/dmrellan/Visual-Auditing-Security-Workbook-with-Microsoft-Sentinel#changelog)
+- [Overview](https://github.com/dmrellan/Visual-Auditing-Security-Workbook-with-Microsoft-Sentinel?tab=readme-ov-file#overview) 
+- [Prerequisites](https://github.com/dmrellan/Visual-Auditing-Security-Workbook-with-Microsoft-Sentinel?tab=readme-ov-file#prerequisites)
+- [Deployment steps](https://github.com/dmrellan/Visual-Auditing-Security-Workbook-with-Microsoft-Sentinel?tab=readme-ov-file#deployment-steps)
+	- [1 - Advanced audit policies and registry keys configuration in Domain Controllers.](https://github.com/dmrellan/Visual-Auditing-Security-Workbook-with-Microsoft-Sentinel?tab=readme-ov-file#1-advanced-audit-policies-and-registry-keys-configuration-in-domain-controllers)
+	- [2 - Audit LAPS password retrievals: Configure SACL](https://github.com/dmrellan/Visual-Auditing-Security-Workbook-with-Microsoft-Sentinel?tab=readme-ov-file#2-audit-laps-password-retrievals-configure-sacl)
+	- [3 - Data Collection Rules: Events and SecurityEvents](https://github.com/dmrellan/Visual-Auditing-Security-Workbook-with-Microsoft-Sentinel?tab=readme-ov-file#3-data-collection-rules-events-and-securityevents)
+	- [4 - Setup the Custom HTTP Data Collector API (PowerShell script) to populate Custom Logs.](https://github.com/dmrellan/Visual-Auditing-Security-Workbook-with-Microsoft-Sentinel?tab=readme-ov-file#4-setup-the-custom-http-data-collector-api-powershell-script-to-populate-custom-logs)
+	- [5 - Create the Log Analytics Parser funtions in your Microsoft Sentinel.](https://github.com/dmrellan/Visual-Auditing-Security-Workbook-with-Microsoft-Sentinel?tab=readme-ov-file#5-create-the-log-analytics-parser-funtions-in-microsoft-sentinel)
+	- [6 - Connect your Domain Controllers to Microsoft Sentinel.](https://github.com/dmrellan/Visual-Auditing-Security-Workbook-with-Microsoft-Sentinel?tab=readme-ov-file#6-connect-domain-controllers-to-microsoft-sentinel)
+	- [7 - Import the Visual Auditing Security Workbook](https://github.com/dmrellan/Visual-Auditing-Security-Workbook-with-Microsoft-Sentinel?tab=readme-ov-file#7-import-the-visual-auditing-security-workbook-with-ama)
+- [Disclaimer](https://github.com/dmrellan/Visual-Auditing-Security-Workbook-with-Microsoft-Sentinel?tab=readme-ov-file#disclaimer)
+- [Appendix with screenshots](https://github.com/dmrellan/Visual-Auditing-Security-Workbook-with-Microsoft-Sentinel?tab=readme-ov-file#appendix---screenshoots)
+- [Author](https://github.com/dmrellan/Visual-Auditing-Security-Workbook-with-Microsoft-Sentinel?tab=readme-ov-file#author)
+- [ChangeLog](https://github.com/dmrellan/Visual-Auditing-Security-Workbook-with-Microsoft-Sentinel?tab=readme-ov-file#changelog)
 
 # Overview
 
