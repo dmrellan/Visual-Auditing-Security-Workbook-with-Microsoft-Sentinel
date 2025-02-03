@@ -20,10 +20,10 @@
     - create the source for eventlog: https://devblogs.microsoft.com/scripting/how-to-use-powershell-to-write-to-event-logs/
 
 .NOTES
-    Script Name:ADObjectsToALA_v1.0
+    Script Name:ADObjectsToALA_v1.3
     AUTHOR:   Diego Martinez Rellan (dmrellan)
-    VERSION:  1.0
-    LASTEDIT: December 21st, 2021
+    VERSION:  1.3
+    LASTEDIT: January 2024
 .HISTORY
     
 #>
@@ -31,7 +31,7 @@
 # **********************************************************************************************************
 # PARAMETERS
 # **********************************************************************************************************
-$domainlist = 'C:\VASW\VASWDataToSentinel\domainList.csv' # "DomainList.csv" file which contains two columns: "domain" and "isLAPSDeployed" (0-LAPSNotDeployed; 1-LAPSDeployed)
+$domainlist = 'C:\VASW\VASWDataToSentinelAMAbased\domainList.csv' # "DomainList.csv" file which contains two columns: "domain" and "isLAPSDeployed" (0-LAPSNotDeployed; 1-LAPSDeployed)
 $adminauditGroup = 'Domain Admins'     # Group of Admins, used in User Hygiene report and other reports to indicate Admin account. Change the name of the group as defined in customer’s environment     
 $pawAuditGroup   = 'PAWComputers'      # Group of PAW computers, used in Computer Hygiene report - column “isPAW”. Change the name of the group as defined in customer’s environment
 $PawAudit        = 1                   # 0-NotUsePAW; 1-UsePAW
@@ -86,6 +86,36 @@ Function Get-data-users ($Element)
     
     $data #| ConvertTo-Json
 }
+Function Get-data-gMSA ($Element) 
+{
+    #Fields accountExpires,adminCount,DistinguishedName,Enabled,GivenName,msDS-PrincipalName,Name,ObjectClass,ObjectGUID,pwdLastSet,SamAccountName,SID,Surname,userAccountControl,UserPrincipalName,whenChanged,whenCreated,lastLogonTimestamp 
+    Write-Host ${$Element.msDS-ManagedPasswordInterval}
+    $data = @{
+    'accountExpires' = [string]$Element.accountExpires
+    'adminCount' = [string]$Element.adminCount
+    'DistinguishedName' = [string]$Element.DistinguishedName
+    'Enabled' = [string]$Element.Enabled
+    'GivenName' = [string]$Element.GivenName
+    'msDS-PrincipalName' = [string]$Element.("msDS-PrincipalName")
+    'Name' = [string]$Element.Name
+    'ObjectClass' = [string]$Element.ObjectClass
+    'ObjectGUID' = [guid]$Element.ObjectGUID
+    'pwdLastSet' = [string]$Element.pwdLastSet
+    'SamAccountName' = [string]$Element.SamAccountName
+    'SID' = [string]$Element.SID
+    'userAccountControl' = [string]$Element.userAccountControl
+    'UserPrincipalName' = [string]$Element.UserPrincipalName
+    'whenChanged' = [string]$Element.whenChanged
+    'whenCreated' = [string]$Element.whenCreated
+    'lastLogonTimestamp' = [string]$Element.lastLogonTimestamp
+    'msDS-ManagedPasswordInterval' = [string]$Element.("msDS-ManagedPasswordInterval")
+    'PrincipalsAllowedToRetrieveManagedPassword' = [string] $Element.PrincipalsAllowedToRetrieveManagedPassword
+    }
+    
+    $data #| ConvertTo-Json
+} 
+
+
 Function Get-data-computers ($Element,$isLAPSDeployed) 
 {
     #LAPS
@@ -204,6 +234,7 @@ Function Post-LogAnalyticsData($WorkspaceId, $sharedKey, $body, $logType)
 
 
     $response = Invoke-WebRequest -Uri $uri -Method $method -ContentType $contentType -Headers $headers -Body $body -UseBasicParsing
+    # if proxy needed: https://bycode.dev/2019/08/22/how-to-use-powershell-invoke-webrequest-behind-corporate-proxy/
     return $response.StatusCode
 }
 
@@ -213,11 +244,13 @@ Function Post-LogAnalyticsData($WorkspaceId, $sharedKey, $body, $logType)
 # **********************************************************************************************************
 #------- Init -----------------
 $domains = Import-Csv $domainlist
-$Users,$Groups,$Computers,$PawAuditList,$AdminAuditList = @()
+$Users,$gMSAs,$Groups,$Computers,$PawAuditList,$AdminAuditList = @()
 
-
+Write-EventLog -LogName Application -Source "VASWDataToSentinel" -EntryType Information -EventId 1900 -Message "ADObjectsToALA_v1.2.ps1 script STARTED"
 ForEach ($domain in $domains) {
-    # USERS SECTION ----------------------------
+    # ******************************************************************************************************************************
+    # USERS SECTION ----------------------------------------------------------------------------------------------------------------
+    # ******************************************************************************************************************************
     $Users=Get-ADUser -Filter * -Server $domain.dc -Properties accountExpires,DistinguishedName,Enabled,GivenName,msDS-PrincipalName,Name,ObjectClass,ObjectGUID,pwdLastSet,SamAccountName,SID,Surname,userAccountControl,UserPrincipalName,whenChanged,whenCreated,lastLogonTimestamp,adminCount | Select-Object accountExpires,adminCount,DistinguishedName,Enabled,GivenName,msDS-PrincipalName,Name,ObjectClass,ObjectGUID,pwdLastSet,SamAccountName,SID,Surname,userAccountControl,UserPrincipalName,whenChanged,whenCreated,lastLogonTimestamp 
     ## Data Limits: Maximum of 30 MB per post to Azure Monitor Data Collector API. 
     $j=0
@@ -239,15 +272,47 @@ ForEach ($domain in $domains) {
         $json = ConvertTo-Json -InputObject $arrayRegs
         $status = Post-LogAnalyticsData -WorkspaceId $WorkspaceId -sharedKey $sharedKey -body ([System.Text.Encoding]::UTF8.GetBytes($json)) -logType $usersCL
         $rows = $arrayRegs.count
-        Write-EventLog -LogName Application -Source "VASWDataToSentinel" -EntryType Information -EventId 19191 -Message "USERS: `n`tResponse status code: $status `n`tIteration Users: $rows `n`tCustom Log: ""$usersCL"""
+        Write-EventLog -LogName Application -Source "VASWDataToSentinel" -EntryType Information -EventId 19191 -Message "USERS SECTION: `n`nDomain: $domain `nResponse status code: $status `nIterating users: $rows users `nCustom Log: ""$usersCL"""
 
     }
     $rows=$j
-    #write-output  "USERS: `n`tResponse status code: $status `n`tUsers: $rows`n`tCustom Log: ""$usersCL"""
-    Write-EventLog -LogName Application -Source "VASWDataToSentinel" -EntryType Information -EventId 1919 -Message "USERS: `n`tResponse status code: $status `n`tTotal Users: $rows`n`tCustom Log: ""$usersCL"""
+    Write-EventLog -LogName Application -Source "VASWDataToSentinel" -EntryType Information -EventId 1919 -Message "USERS SECTION: `n`nDomain: $domain `nResponse status code: $status `nTOTAL users: $rows users `nCustom Log: ""$usersCL"""
+
+    # ******************************************************************************************************************************
+    # GROUP MANAGED SERVICE ACCOUNTS -----------------------------------------------------------------------------------------------
+    # ******************************************************************************************************************************
+    
+    $gMSAs=Get-ADServiceAccount -Filter * -Properties accountExpires,DistinguishedName,Enabled,GivenName,msDS-PrincipalName,Name,ObjectClass,ObjectGUID,pwdLastSet,SamAccountName,SID,userAccountControl,UserPrincipalName,whenChanged,whenCreated,lastLogonTimestamp,adminCount,msDS-ManagedPasswordInterval,PrincipalsAllowedToRetrieveManagedPassword | Select-Object accountExpires,adminCount,DistinguishedName,Enabled,GivenName,msDS-PrincipalName,Name,ObjectClass,ObjectGUID,pwdLastSet,SamAccountName,SID,userAccountControl,UserPrincipalName,whenChanged,whenCreated,lastLogonTimestamp,msDS-ManagedPasswordInterval,PrincipalsAllowedToRetrieveManagedPassword
+    ## Data Limits: Maximum of 30 MB per post to Azure Monitor Data Collector API. 
+    $j=0
+    $i=0
+
+    # If the number of elements is over 10k this part split the Post to log analytics in different posts with 10k elements as maximum
+    while ($j -lt $gMSAs.count)
+    {
+        $arrayRegs = @()
+        for ($i=0; $i -lt $maxElements; $i++)
+        {
+                
+            $reg = Get-data-gmsa -Element $gMSAs[$j]
+            $arrayRegs += $reg
+            $j++
+            if ($j -eq $gMSAs.count){break}
+        }
+        
+        $json = ConvertTo-Json -InputObject $arrayRegs
+        $status = Post-LogAnalyticsData -WorkspaceId $WorkspaceId -sharedKey $sharedKey -body ([System.Text.Encoding]::UTF8.GetBytes($json)) -logType $usersCL
+        $rows = $arrayRegs.count
+        Write-EventLog -LogName Application -Source "VASWDataToSentinel" -EntryType Information -EventId 19191 -Message "gMSA: `n`tResponse status code: $status `n`tIteration gMSAs: $rows `n`tCustom Log: ""$usersCL"""
+
+    }
+    $rows=$j
+    Write-EventLog -LogName Application -Source "VASWDataToSentinel" -EntryType Information -EventId 1919 -Message "gMSA: `n`tResponse status code: $status `n`tTotal gMSA: $rows`n`tCustom Log: ""$usersCL"""
 
 
-    # COMPUTERS SECTION -----------------------
+    # ******************************************************************************************************************************
+    # COMPUTERS SECTION ------------------------------------------------------------------------------------------------------------
+    # ******************************************************************************************************************************
     If ($domain.isLAPSDeployed -gt 0) {
         $Computers = Get-ADComputer -Filter * -Server $domain.dc -Properties ms-Mcs-AdmPwdExpirationTime, accountExpires, DistinguishedName, DNSHostName, Enabled, lastLogonTimestamp, msDS-PrincipalName, Name, ObjectClass, ObjectGUID, OperatingSystem, primaryGroupID, pwdLastSet, SamAccountName,SID, userAccountControl, UserPrincipalName, whenChanged, whenCreated | Select-Object ms-Mcs-AdmPwdExpirationTime, accountExpires, DistinguishedName, DNSHostName, Enabled, lastLogonTimestamp, msDS-PrincipalName, Name, ObjectClass, ObjectGUID, OperatingSystem, primaryGroupID, pwdLastSet, SamAccountName,SID, userAccountControl, UserPrincipalName, whenChanged, whenCreated
         
@@ -275,31 +340,47 @@ ForEach ($domain in $domains) {
         $status=Post-LogAnalyticsData -WorkspaceId $WorkspaceId -sharedKey $sharedKey -body ([System.Text.Encoding]::UTF8.GetBytes($json)) -logType $computersCL
         $LAPS=$domain.isLAPSDeployed
         $rows=$arrayRegs.count
-        Write-EventLog -LogName Application -Source "VASWDataToSentinel" -EntryType Information -EventId 19201 -Message "COMPUTERS: `n`tResponse status code: $status `n`tIteration computers: $rows `n`tCustom Log: ""$computersCL"""
+        Write-EventLog -LogName Application -Source "VASWDataToSentinel" -EntryType Information -EventId 19201 -Message "COMPUTERS SECTION: `n`nDomain: $domain `nResponse status code: $status `nIterating computers: $rows computers `nCustom Log: ""$computersCL"""
 
     }
     $rows=$j
     $LAPS=$domain.isLAPSDeployed
     #write-output  "COMPUTERS: `n`tResponse status code: $status `n`tUsers: $rows`n`tCustom Log: ""$computersCL"""
-    Write-EventLog -LogName Application -Source "VASWDataToSentinel" -EntryType Information -EventId 1920 -Message "COMPUTERS: `n`tLAPSDeployed: $LAPS `n`tResponse status code: $status `n`tTotal computers: $rows`n`tCustom Log: ""$computersCL"""
+    Write-EventLog -LogName Application -Source "VASWDataToSentinel" -EntryType Information -EventId 1920 -Message "COMPUTERS SECTION: `n`nDomain: $domain `nLAPSDeployed: $LAPS (0-LAPSnotDeployed; 1-LAPSDeployed. Config in the CSV file) `nResponse status code: $status `nTOTAL computers: $rows computers `nCustom Log: ""$computersCL"""
         
 
-    # GROUPS SECTION ------------------------
+    # ******************************************************************************************************************************
+    # GROUPS SECTION ---------------------------------------------------------------------------------------------------------------
+    # ******************************************************************************************************************************
     $Groups=Get-ADGroup -Filter * -Server $domain.dc -Properties adminCount, msDS-PrincipalName, samaccountName | Select-Object DistinguishedName,GroupCategory,msDS-PrincipalName,Name,ObjectGUID,SamAccountName,SID,adminCount
+    ## Data Limits: Maximum of 30 MB per post to Azure Monitor Data Collector API. 
+    $j=0
+    $i=0
+    
+    # If the number of elements is over $maxElements this section split the Post to log analytics in different posts with $maxElements elements as maximum
+    while ($j -lt $Groups.count)
+    {
         $arrayRegs = @()
-        for ($j=0; $j -lt $Groups.count; $j++)
+        for ($i=0; $i -lt $maxElements; $i++)
         {
             $reg = Get-data-groups -Element $Groups[$j] 
             $arrayRegs += $reg
-        } 
+            $j++
+            if ($j -eq $Groups.count){break}
+        }
+         
         $json = ConvertTo-Json -InputObject $arrayRegs
-        $status=Post-LogAnalyticsData -WorkspaceId $WorkspaceId -sharedKey $sharedKey -body ([System.Text.Encoding]::UTF8.GetBytes($json)) -logType $groupsCL
-        $rows=$j
-        #write-output  "GROUPS: `n`tResponse status code: $status `n`tGroups: $rows `n`tCustom Log: ""$groupsCL"""
-         Write-EventLog -LogName Application -Source "VASWDataToSentinel" -EntryType Information -EventId 1921 -Message "GROUPS: `n`tResponse status code: $status `n`tGroups: $rows `n`tCustom Log: ""$groupsCL"""
+        $status = Post-LogAnalyticsData -WorkspaceId $WorkspaceId -sharedKey $sharedKey -body ([System.Text.Encoding]::UTF8.GetBytes($json)) -logType $groupsCL
+        $rows = $arrayRegs.count
+        Write-EventLog -LogName Application -Source "VASWDataToSentinel" -EntryType Information -EventId 19211 -Message "GROUPS SECTION: `n`nDomain: $domain `nResponse status code: $status `nIterating groups: $rows `nCustom Log: ""$groupsCL"""
+    }
+    $rows = $j
+    Write-EventLog -LogName Application -Source "VASWDataToSentinel" -EntryType Information -EventId 1921 -Message "GROUPS SECTION: `nDomain: $domain `nResponse status code: $status `nTOTAL Groups: $rows`nCustom Log: ""$groupsCL"""
 
-
-    # PawAudit section -----------------------
+    
+    # ******************************************************************************************************************************
+    # PAWAUDIT SECTION -------------------------------------------------------------------------------------------------------------
+    # ******************************************************************************************************************************
     If ($PawAudit -gt 0) {
         $PawAuditList = @()
         $PawAuditList += Get-ADGroupMember -Identity $pawAuditGroup -Server $domain.dc -Recursive | Select-Object distinguishedName 
@@ -313,10 +394,13 @@ ForEach ($domain in $domains) {
         $status=Post-LogAnalyticsData -WorkspaceId $WorkspaceId -sharedKey $sharedKey -body ([System.Text.Encoding]::UTF8.GetBytes($json)) -logType $pawauditCL
         $rows=$j
         #write-output  "PAWAUDIT: `n`tResponse status code: $status `n`tPawAudit: $rows `n`tCustom Log: ""$pawauditCL"""
-         Write-EventLog -LogName Application -Source "VASWDataToSentinel" -EntryType Information -EventId 1922 -Message "PAWAUDIT: `n`tResponse status code: $status `n`tPawAudit: $rows `n`tCustom Log: ""$pawauditCL"""
+         Write-EventLog -LogName Application -Source "VASWDataToSentinel" -EntryType Information -EventId 1922 -Message "PAWAUDIT SECTION: `n`nDomain: $domain `nResponse status code: $status `nPawAudit: $rows `nCustom Log: ""$pawauditCL"""
     }
 
-    # AdminAudit section ---------------------
+
+    # ******************************************************************************************************************************
+    # ADMINAUDIT SECTION -----------------------------------------------------------------------------------------------------------
+    # ******************************************************************************************************************************
     If ($AdminAudit -gt 0) {
         $AdminAuditList = @()
         $AdminAuditList += Get-ADGroupMember -Identity $adminAuditGroup -Server $domain.dc | Select-Object distinguishedName 
@@ -331,7 +415,8 @@ ForEach ($domain in $domains) {
         $status=Post-LogAnalyticsData -WorkspaceId $WorkspaceId -sharedKey $sharedKey -body ([System.Text.Encoding]::UTF8.GetBytes($json)) -logType $adminauditCL
         $rows=$j
         #write-output  "ADMINAUDIT: `n`tResponse status code: $status `n`tAdminAudit: $rows `n`tCustom Log: ""$adminauditCL"""
-        Write-EventLog -LogName Application -Source "VASWDataToSentinel" -EntryType Information -EventId 1923 -Message "ADMINAUDIT: `n`tResponse status code: $status `n`tAdminAudit: $rows `n`tCustom Log: ""$adminauditCL"""
+        Write-EventLog -LogName Application -Source "VASWDataToSentinel" -EntryType Information -EventId 1923 -Message "ADMINAUDIT SECTION: `n`nDomain: $domain `nResponse status code: $status `nAdminAudit: $rows `nCustom Log: ""$adminauditCL"""
     }
 }
+Write-EventLog -LogName Application -Source "VASWDataToSentinel" -EntryType Information -EventId 1900 -Message "ADObjectsToALA_v1.3.ps1 script FINISHED"
 

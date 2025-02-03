@@ -1,7 +1,7 @@
-//VASWUsersParser
-VASW_users_CL 
+//VASWUsersParser v1.2
+VASW_users_CL
 | summarize arg_max(TimeGenerated,*) by SID_s
-| where TimeGenerated >= ago(24h)
+| where TimeGenerated >= ago(30d)
 | project TimeGenerated
     , SID = SID_s
     , Enabled = Enabled_s
@@ -19,11 +19,9 @@ VASW_users_CL
     , userAccountControl = userAccountControl_s
     , whenChanged = todatetime(whenChanged_s)
     , Name = Name_s
-    , msDSPrincipalName = msDS_PrincipalName_s
+    //, msDSPrincipalName = msDS_PrincipalName_s
+    , msDSPrincipalName =iif(msDS_PrincipalName_s=="",strcat(toupper(split(split(DistinguishedName_s,",").[array_length(split(DistinguishedName_s,","))-2],"=").[1]),"\\",SamAccountName_s),msDS_PrincipalName_s)
     , ObjectGUID = ObjectGUID_g
-    , PrincipalsAllowedToRetrieveManagedPassword = PrincipalsAllowedToRetrieveManagedPassword_s
-    , PasswordInterval = msDS_ManagedPasswordInterval_s
-| extend isGMSA = iif(ObjectClass == "msDS-GroupManagedServiceAccount","True","False")
 | extend isLockedOut = iif(binary_and(toint(userAccountControl),16)>0,"True","False")
 | extend isDisabled = iif(binary_and(toint(userAccountControl),2)>0,"True","False")
 | extend isNoPasswordRequired = iif(binary_and(toint(userAccountControl),32)>0,"True","False")

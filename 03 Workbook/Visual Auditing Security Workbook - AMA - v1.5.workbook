@@ -795,7 +795,7 @@
             "type": 3,
             "content": {
               "version": "KqlItem/1.0",
-              "query": "VASWUsersParser\r\n| where @\"{msDSPrincipalNameP:lable}\"==\"All\" or msDSPrincipalName == @\"{msDSPrincipalNameP}\"\r\n| extend isStaleLogon = tostring(iif(DaysSinceLastLogon>toint('{StaleThreshold}'),\"True\",\"False\"))\r\n| extend isStalePassword = iif(DaysSincePasswordChanged>toint('{StaleThreshold}'),\"True\",\"False\")\r\n| where \"{isAdmin}\"==\"\" or isAdmin == \"{isAdmin:value}\"\r\n| where \"{isStalePassword}\"==\"\" or isStalePassword == \"{isStalePassword:value}\"\r\n| where \"{isStaleLogon}\"==\"\" or isStaleLogon == \"{isStaleLogon:value}\"\r\n| where \"{isPasswordNeverExpires}\"==\"\" or isPasswordNeverExpires == \"{isPasswordNeverExpires:value}\"\r\n| where \"{isDisabled}\"==\"\" or isDisabled == \"{isDisabled:value}\"\r\n| where \"{isAccountExpired}\"==\"\" or isAccountExpired == \"{isAccountExpired:value}\"\r\n| project msDSPrincipalName\r\n    , isDisabled = iif(Enabled==\"True\",\"False\",\"True\")\r\n    , isLockedOut\r\n    , isPasswordNeverExpires\r\n    , isNoPasswordRequired\r\n    , DaysSinceLastLogon = DaysSinceLastLogon\r\n    , DaysSincePasswordChanged = DaysSincePasswordChanged\r\n    , isAdmin\r\n    , whenChanged\r\n    , whenCreated\r\n    , DistinguishedName\r\n    //\r\n    , SID\r\n    , Enabled\r\n    , pwdLastSet\r\n    , SamAccountName\r\n    , accountExpires\r\n    , ObjectClass\r\n    , adminCount\r\n    , lastLogonTimestamp\r\n    , userAccountControl\r\n    , Name\r\n    , ObjectGUID\r\n    , isTrustAccount\r\n    , DaysSinceAccountExpired\r\n    , isAccountExpired\r\n    , PrincipalsAllowedToRetrieveManagedPassword\r\n\t, PasswordInterval\r\n    , isGMSA\r\n| order by msDSPrincipalName asc",
+              "query": "VASWUsersParser\r\n| where @\"{msDSPrincipalNameP:lable}\"==\"All\" or msDSPrincipalName == @\"{msDSPrincipalNameP}\"\r\n| extend isStaleLogon = tostring(iif(DaysSinceLastLogon>toint('{StaleThreshold}'),\"True\",\"False\"))\r\n| extend isStalePassword = iif(DaysSincePasswordChanged>toint('{StaleThreshold}'),\"True\",\"False\")\r\n| where \"{isAdmin}\"==\"\" or isAdmin == \"{isAdmin:value}\"\r\n| where \"{isStalePassword}\"==\"\" or isStalePassword == \"{isStalePassword:value}\"\r\n| where \"{isStaleLogon}\"==\"\" or isStaleLogon == \"{isStaleLogon:value}\"\r\n| where \"{isPasswordNeverExpires}\"==\"\" or isPasswordNeverExpires == \"{isPasswordNeverExpires:value}\"\r\n| where \"{isDisabled}\"==\"\" or isDisabled == \"{isDisabled:value}\"\r\n| where \"{isAccountExpired}\"==\"\" or isAccountExpired == \"{isAccountExpired:value}\"\r\n| project msDSPrincipalName\r\n    , isDisabled = iif(Enabled==\"True\",\"False\",\"True\")\r\n    , isLockedOut\r\n    , isPasswordNeverExpires\r\n    , isNoPasswordRequired\r\n    , DaysSinceLastLogon = DaysSinceLastLogon\r\n    , DaysSincePasswordChanged = DaysSincePasswordChanged\r\n    , isAdmin\r\n    , whenChanged\r\n    , whenCreated\r\n    , DistinguishedName\r\n    //\r\n    , SID\r\n    , Enabled\r\n    , pwdLastSet\r\n    , SamAccountName\r\n    , accountExpires\r\n    , ObjectClass\r\n    , adminCount\r\n    , lastLogonTimestamp\r\n    , userAccountControl\r\n    , Name\r\n    , ObjectGUID\r\n    , isTrustAccount\r\n    , DaysSinceAccountExpired\r\n    , isAccountExpired\r\n| order by msDSPrincipalName asc",
               "size": 0,
               "showAnalytics": true,
               "title": "Details",
@@ -4666,10 +4666,7 @@
                   "timeContextFromParameter": "TimeRange",
                   "defaultValue": "value::all",
                   "queryType": 0,
-                  "resourceType": "microsoft.operationalinsights/workspaces",
-                  "value": [
-                    "value::all"
-                  ]
+                  "resourceType": "microsoft.operationalinsights/workspaces"
                 },
                 {
                   "id": "65fcc65e-3f75-4ddf-b8f1-71b8f332b8e6",
@@ -4683,6 +4680,9 @@
                   "query": "SecurityEvent\r\n| where EventID in (4720, 4722, 4724, 4725, 4726, 4765, 4766, 4794)\r\n| project TimeGenerated, Computer, Level, EventID, ChangeMaker=SubjectAccount, TargetAccount , Activity\r\n| extend AuditStatus = iif(Level==8,\"Success\",iif(Level==16,\"Failure\",\"Unknown\"))\r\n| join kind=leftouter (VASWUsersParser) on $left.TargetAccount==$right.msDSPrincipalName\r\n| extend isAdminTarget = iif(isAdmin==\"\",\"Unknown\",iif(isAdmin==\"True\",\"True\",\"False\"))\r\n| distinct isAdminTarget\r\n| order by isAdminTarget asc",
                   "crossComponentResources": [
                     "{Workspace}"
+                  ],
+                  "value": [
+                    "value::all"
                   ],
                   "typeSettings": {
                     "additionalResourceOptions": [
