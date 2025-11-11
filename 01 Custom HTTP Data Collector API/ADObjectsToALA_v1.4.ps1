@@ -1,6 +1,6 @@
 ﻿<#
 .SYNOPSIS 
-    This PowerShell script send data to Azure Log Analytics in Custom Log format.
+    This PowerShell script send data to Azure Log Analytics in Custom Log format
     
 
 .DESCRIPTION
@@ -20,10 +20,10 @@
     - create the source for eventlog: https://devblogs.microsoft.com/scripting/how-to-use-powershell-to-write-to-event-logs/
 
 .NOTES
-    Script Name:ADObjectsToALA_v1.3
+    Script Name:ADObjectsToALA_v1.4
     AUTHOR:   Diego Martinez Rellan (dmrellan)
-    VERSION:  1.3
-    LASTEDIT: January 2024
+    VERSION:  1.4
+    LASTEDIT: November 2025
 .HISTORY
     
 #>
@@ -419,4 +419,5 @@ ForEach ($domain in $domains) {
     }
 }
 Write-EventLog -LogName Application -Source "VASWDataToSentinel" -EntryType Information -EventId 1900 -Message "ADObjectsToALA_v1.3.ps1 script FINISHED"
+
 
