@@ -253,7 +253,7 @@ Note: In "**Legacy category**" field you can use "VASWFunctions" value for all f
 ## 6. Connect Domain Controllers to Microsoft Sentinel.
 In most situations, your Domain Controllers will be located outside of Azure (on-premises). If this is the case, before enabling the [Azure Monitor Agent (AMA)](https://learn.microsoft.com/en-us/azure/azure-monitor/agents/azure-monitor-agent-manage?tabs=azure-portal), you will need to deploy [Azure ARC](https://learn.microsoft.com/en-us/azure/azure-arc/servers/plan-at-scale-deployment) to connect your Domain Controllers to Azure, and then enable the AMA extension.
 
-![image](https://github.com/dmrellan/Visual-Auditing-Security-Workbook-with-Microsoft-Sentinel/assets/35997289/85e5e4f2-c6f6-4587-a22c-c405bfce483b)
+![architecture](https://github.com/user-attachments/assets/16a208d4-3713-4072-8310-2a592b6787b4)
 
 ## 7. Import the "Visual Auditing Security Workbook with AMA"
 1. Go to Microsoft Sentinel > Workbooks.
