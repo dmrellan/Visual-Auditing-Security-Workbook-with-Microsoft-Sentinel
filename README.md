@@ -234,7 +234,7 @@ Follow these steps to configure the Custom HTTP Data Collector:
 6. Create a scheduled task to run the PowerShell script **daily**.
 7. To verify that the PowerShell script is running successfully and Custom Logs are created in the Microsoft Sentinel workspace:
   1. Execute the PowerShell script manually to observe any errors or unexpected behavior.
-  2. Check the Microsoft Sentinel workspace for the presence of Custom Logs.
+  2. Check the Microsoft Sentinel workspace for the presence of Custom Logs. The **type** of these tables MUST BE **"Custom table (classic)"**
 
    **Note:** During the initial script execution, allow 5 to 10 minutes for the logs to appear in Microsoft Sentinel.
 
