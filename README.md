@@ -1,6 +1,6 @@
 # Visual Auditing Security Workbook with Microsoft Sentinel
 
-#### Update January 2024 - Azure Monitor Agent (AMA) supported
+#### Last Update November 2025
 
 # Content
 - [Overview](https://github.com/dmrellan/Visual-Auditing-Security-Workbook-with-Microsoft-Sentinel?tab=readme-ov-file#overview) 
@@ -302,6 +302,12 @@ The Visual Auditing Security Workbook was developed by **Diego Martínez Rellán
 
 
 ## ChangeLog
+### Version 1.5.1 (November 2025)
+- **Custom HTTP Data Collector API enhancements**
+  - Script reviewed
+- **GitHub Article**
+  - Updated with a new Architecture diagram
+     
 ### Version 1.5 (January 2024)
 - **Solution Modifications**
   - The solution has been adapted to run with AMA (Azure Monitor Agent).
