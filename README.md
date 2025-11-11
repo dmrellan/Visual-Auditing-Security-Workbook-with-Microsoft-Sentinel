@@ -1,10 +1,5 @@
 # Visual Auditing Security Workbook with Microsoft Sentinel
 
-> ⚠️ **‼️ UPDATE APRIL 2025 ‼️**  
-> In March 2025, Azure changed the default table type when creating custom logs via the HTTP Data Collector API.  
-> I’m currently working on updating the solution and will share a revised version as soon as possible.  
-> **Until then, the deployment process WILL FAIL when attempting to send data.**
-
 #### Update January 2024 - Azure Monitor Agent (AMA) supported
 
 # Content
